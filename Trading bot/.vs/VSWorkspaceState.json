@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Config",
+    "\\data",
+    "\\Logs",
+    "\\Scripts",
+    "\\Src",
+    "\\Tests"
+  ],
+  "SelectedNode": "\\Scripts\\backup_positions.py",
+  "PreviewInSolutionExplorer": false
+}

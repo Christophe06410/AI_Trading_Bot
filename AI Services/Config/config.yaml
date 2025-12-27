@@ -1,0 +1,40 @@
+﻿# AI Service Configuration
+server:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  reload: false
+
+# ML Model Configuration (Points to ML-Pipeline models)
+ml:
+  model_path: "../ML-Pipeline/models/production/"  # IMPORTANT: Points to ML-Pipeline
+  min_confidence: 0.70
+  feature_cache_ttl: 300
+  
+  # Model types to load
+  models:
+    - name: "random_forest"
+      file: "random_forest_model.joblib"
+    - name: "xgboost"
+      file: "xgboost_model.json"
+    - name: "ensemble"
+      file: "ensemble_model.pkl"
+
+# Redis Cache
+cache:
+  redis_url: "redis://localhost:6379/0"
+  ttl: 3600
+  enabled: true
+
+# API Security
+security:
+  api_key_header: "X-API-Key"
+  require_auth: true
+  valid_api_keys: []
+  rate_limit_per_minute: 60
+
+# Logging
+logging:
+  level: "INFO"
+  format: "json"
+  file: "logs/ai_service.log"

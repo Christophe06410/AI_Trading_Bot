@@ -1,0 +1,592 @@
+# ============================================================================
+# UPGRADED ML PIPELINE - ENTERPRISE CONFIGURATION
+# ============================================================================
+
+# Pipeline Version
+version: "3.0.0"
+pipeline_name: "solana_intelligence_engine"
+
+# ============================================================================
+# 01: INTELLIGENT DATA ORCHESTRATOR
+# ============================================================================
+data_orchestrator:
+  # Primary Data Sources (Your existing + upgraded)
+  primary_sources:
+    binance:
+      enabled: true
+      api_key: "${BINANCE_API_KEY}"
+      symbols: ["SOLUSDT", "BTCUSDT", "ETHUSDT"]
+      timeframes: ["1m", "5m", "15m", "1h", "4h", "1d"]
+    
+    coinbase:
+      enabled: true
+      api_key: "${COINBASE_API_KEY}"
+      
+    kraken:
+      enabled: true
+  
+  # Alternative Data Sources (NEW)
+  alternative_data:
+    social_sentiment:
+      twitter:
+        enabled: true
+        api_key: "${TWITTER_API_KEY}"
+        track_terms: ["Solana", "$SOL", "SOLANA", "SolanaNetwork"]
+      
+      reddit:
+        enabled: true
+        subreddits: ["solana", "cryptocurrency", "CryptoMarkets"]
+    
+    on_chain_data:
+      solana_labs:
+        enabled: true
+        rpc_endpoints:
+          - "https://api.mainnet-beta.solana.com"
+          - "https://solana-api.projectserum.com"
+        
+        metrics:
+          - "active_addresses"
+          - "transaction_count"
+          - "total_value_locked"
+          - "fee_market"
+      
+      defi_llama:
+        enabled: true
+        protocols: ["raydium", "orca", "jupiter", "marinade"]
+    
+    news_sentiment:
+      cryptopanic:
+        enabled: true
+        api_key: "${CRYPTOPANIC_API_KEY}"
+      
+      google_news:
+        enabled: true
+  
+  # Real-time Stream Processing
+  realtime_streaming:
+    enabled: true
+    websocket_endpoints:
+      binance: "wss://stream.binance.com:9443/ws"
+      coinbase: "wss://ws-feed.pro.coinbase.com"
+      serum: "wss://api.mainnet-beta.solana.com"
+    
+    buffer_size: 1000
+    max_latency_ms: 100
+  
+  # Data Quality
+  data_quality:
+    enabled: true
+    checks:
+      - "missing_values"
+      - "outlier_detection"
+      - "volume_spikes"
+      - "price_gaps"
+      - "timestamp_integrity"
+    
+    auto_correction: true
+    alert_threshold: 0.05  # 5% bad data triggers alert
+
+# ============================================================================
+# 02: ADVANCED FEATURE CATHEDRAL
+# ============================================================================
+feature_cathedral:
+  # Temporal Hierarchical Features
+  temporal_hierarchy:
+    timeframes: ["1m", "5m", "15m", "1h", "4h", "1d", "1w"]
+    aggregation_methods: ["mean", "std", "min", "max", "last"]
+    lookback_periods: [5, 20, 50, 100, 200]
+  
+  # Market Microstructure
+  microstructure:
+    order_book_depth: 10
+    trade_flow_analysis: true
+    volume_profile: true
+    liquidity_analysis: true
+    
+    # High-frequency features
+    tick_analysis: true
+    spread_analysis: true
+    price_impact: true
+  
+  # Cross-Asset Relationships
+  cross_asset:
+    enabled: true
+    correlation_matrix_size: 20
+    assets: ["SOL", "BTC", "ETH", "USDC", "RAY", "SRM"]
+    
+    # Solana Ecosystem
+    solana_ecosystem:
+      enabled: true
+      tokens: ["SOL", "RAY", "SRM", "MNGO", "ORCA", "PORT"]
+      dex_pools: true
+      lending_rates: true
+    
+    # Statistical Arbitrage
+    pairs_trading: true
+    cointegration_test: true
+    hedge_ratios: true
+  
+  # Regime Switching
+  regime_detection:
+    enabled: true
+    methods:
+      - "hidden_markov_model"
+      - "gaussian_mixture"
+      - "volatility_regimes"
+    
+    regimes:
+      - "high_volatility_bull"
+      - "high_volatility_bear"
+      - "low_volatility_sideways"
+      - "trending_up"
+      - "trending_down"
+    
+    transition_matrix_learning: true
+  
+  # Enhanced Your Features
+  your_features_enhanced:
+    multiplier: 10  # Create 10x more features
+    interaction_terms: true
+    polynomial_features: true
+    fourier_transforms: true
+    wavelet_analysis: true
+
+# ============================================================================
+# 03: ENSEMBLE OF ENSEMBLES
+# ============================================================================
+ensemble_of_ensembles:
+  # Temporal Fusion Transformers (State-of-the-art)
+  temporal_fusion:
+    enabled: true
+    hidden_size: 256
+    dropout_rate: 0.1
+    num_heads: 8
+    num_encoder_layers: 3
+    num_decoder_layers: 3
+    
+    # Multi-horizon predictions
+    output_quantiles: [0.1, 0.5, 0.9]
+    prediction_horizons: [1, 5, 10, 20, 50]
+  
+  # Boosted Trees Ensemble
+  boosted_trees:
+    enabled: true
+    models:
+      lightgbm:
+        n_estimators: 2000
+        num_leaves: 127
+        learning_rate: 0.01
+        feature_fraction: 0.8
+        
+      xgboost:
+        n_estimators: 2000
+        max_depth: 8
+        learning_rate: 0.01
+        subsample: 0.8
+        
+      catboost:
+        iterations: 2000
+        depth: 8
+        learning_rate: 0.01
+        l2_leaf_reg: 3
+    
+    stacking_method: "blending"
+    meta_learner: "lightgbm"
+  
+  # Deep Learning Tower
+  deep_learning:
+    enabled: true
+    architectures:
+      lstm:
+        units: [128, 64, 32]
+        dropout: 0.2
+        recurrent_dropout: 0.2
+        
+      cnn:
+        filters: [64, 128, 256]
+        kernel_sizes: [3, 5, 7]
+        dropout: 0.3
+        
+      transformer:
+        d_model: 128
+        num_heads: 8
+        dff: 512
+        num_layers: 4
+    
+    attention_mechanisms: true
+    residual_connections: true
+    batch_normalization: true
+  
+  # Reinforcement Learning Agent
+  reinforcement_learning:
+    enabled: true
+    algorithm: "PPO"
+    
+    state_space:
+      market_state: ["price", "volume", "volatility", "sentiment"]
+      portfolio_state: ["position", "pnl", "exposure", "risk"]
+      macro_state: ["vix", "dxy", "rates", "liquidity"]
+    
+    action_space:
+      actions: ["LONG", "SHORT", "WAIT", "CLOSE", "HEDGE"]
+      position_sizes: [0.1, 0.25, 0.5, 0.75, 1.0]  # % of capital
+    
+    reward_function:
+      primary: "risk_adjusted_return"
+      components:
+        - "sharpe_ratio"
+        - "sortino_ratio"
+        - "calmar_ratio"
+        - "max_drawdown_penalty"
+        - "transaction_cost_penalty"
+    
+    training:
+      total_timesteps: 1000000
+      learning_rate: 0.0003
+      entropy_coefficient: 0.01
+  
+  # Probabilistic Models
+  probabilistic:
+    enabled: true
+    models:
+      bayesian_neural_network:
+        prior_scale: 1.0
+        posterior_scale: 0.1
+        
+      gaussian_process:
+        kernel: "matern"
+        nu: 2.5
+        
+      quantile_regression_forest:
+        n_estimators: 1000
+        quantiles: [0.05, 0.25, 0.5, 0.75, 0.95]
+    
+    uncertainty_quantification: true
+    confidence_intervals: true
+
+# ============================================================================
+# 04: MULTI-HORIZON PREDICTION
+# ============================================================================
+multi_horizon:
+  # Immediate Signals (<5 minutes)
+  immediate:
+    enabled: true
+    horizon_minutes: 1
+    update_frequency_seconds: 30
+    features: ["order_flow", "market_depth", "trade_imbalance"]
+    
+    models:
+      - "xgboost_immediate"
+      - "lstm_high_frequency"
+      - "market_microstructure_model"
+  
+  # Short-Term Predictor (15m-1h)
+  short_term:
+    enabled: true
+    horizon_minutes: 60
+    update_frequency_minutes: 5
+    features: ["technical_indicators", "volume_profile", "sentiment"]
+    
+    models:
+      - "lightgbm_short_term"
+      - "cnn_trend_detector"
+      - "ensemble_60min"
+  
+  # Medium-Term Forecaster (4h-1d)
+  medium_term:
+    enabled: true
+    horizon_hours: 24
+    update_frequency_hours: 1
+    features: ["cross_asset", "regime_features", "macro_indicators"]
+    
+    models:
+      - "catboost_medium_term"
+      - "transformer_24h"
+      - "probabilistic_forecaster"
+  
+  # Trend Detector (Weekly)
+  trend:
+    enabled: true
+    horizon_days: 7
+    update_frequency_days: 1
+    features: ["fundamental", "on_chain", "market_structure"]
+    
+    models:
+      - "random_forest_trend"
+      - "lstm_long_term"
+      - "ensemble_weekly"
+
+# ============================================================================
+# 05: SELF-IMPROVING SYSTEM
+# ============================================================================
+self_improving:
+  # Automated Feature Discovery
+  feature_discovery:
+    enabled: true
+    genetic_algorithm:
+      population_size: 100
+      generations: 50
+      mutation_rate: 0.1
+      crossover_rate: 0.8
+    
+    neural_architecture_search:
+      search_space: "darts"
+      controller_units: 64
+      child_epochs: 50
+    
+    symbolic_regression:
+      enabled: true
+      operations: ["+", "-", "*", "/", "log", "exp", "sqrt"]
+  
+  # Hyperparameter Optimization
+  hyperparameter_optimization:
+    enabled: true
+    method: "bayesian_optimization"
+    
+    search_spaces:
+      lightgbm:
+        num_leaves: {"min": 31, "max": 255, "type": "int"}
+        learning_rate: {"min": 0.001, "max": 0.1, "type": "float"}
+        feature_fraction: {"min": 0.5, "max": 1.0, "type": "float"}
+      
+      xgboost:
+        max_depth: {"min": 3, "max": 12, "type": "int"}
+        learning_rate: {"min": 0.001, "max": 0.1, "type": "float"}
+        subsample: {"min": 0.5, "max": 1.0, "type": "float"}
+    
+    optimization_metric: "sharpe_ratio"
+    n_trials: 100
+  
+  # Model Drift Detection
+  drift_detection:
+    enabled: true
+    methods:
+      - "kolmogorov_smirnov"
+      - "population_stability_index"
+      - "kl_divergence"
+      - "maximum_mean_discrepancy"
+    
+    monitoring_frequency: "daily"
+    alert_threshold: 0.05
+    auto_retrain: true
+  
+  # Performance Feedback Loop
+  feedback_loop:
+    enabled: true
+    trade_attribution: true
+    signal_quality_tracking: true
+    
+    learning_mechanisms:
+      online_learning: true
+      experience_replay: true
+      prioritized_replay: true
+    
+    adaptation_rate: 0.01
+    memory_size: 10000
+
+# ============================================================================
+# 06: ROBUST BACKTESTING
+# ============================================================================
+backtesting:
+  # Walk-Forward Optimization
+  walk_forward:
+    enabled: true
+    window_size: "180d"
+    step_size: "30d"
+    minimum_periods: 3
+    
+    optimization_objective: "sharpe_ratio"
+    constraints:
+      max_drawdown: -0.2
+      win_rate: 0.4
+  
+  # Monte Carlo Simulation
+  monte_carlo:
+    enabled: true
+    simulations: 10000
+    confidence_level: 0.95
+    
+    risk_metrics:
+      - "var_95"
+      - "cvar_95"
+      - "expected_shortfall"
+      - "worst_case_scenario"
+    
+    scenario_analysis:
+      - "flash_crash"
+      - "liquidity_crisis"
+      - "regulatory_shock"
+      - "market_manipulation"
+  
+  # Transaction Cost Model
+  transaction_costs:
+    enabled: true
+    components:
+      spread: true
+      slippage: true
+      fees: true
+      funding_rates: true
+      gas_costs: true
+    
+    models:
+      linear_slippage: true
+      square_root_law: true
+      volume_profile_slippage: true
+    
+    realistic_execution: true
+    partial_fills: true
+  
+  # Out-of-Sample Testing
+  out_of_sample:
+    enabled: true
+    testing_period: "90d"
+    validation_method: "nested_cross_validation"
+    
+    performance_metrics:
+      classification:
+        - "precision"
+        - "recall"
+        - "f1"
+        - "matthews_correlation"
+      
+      regression:
+        - "mse"
+        - "mae"
+        - "r2"
+        - "mape"
+      
+      trading:
+        - "sharpe_ratio"
+        - "sortino_ratio"
+        - "calmar_ratio"
+        - "profit_factor"
+        - "max_drawdown"
+
+# ============================================================================
+# 07: PRODUCTION READY INFERENCE
+# ============================================================================
+inference:
+  # Model Serving Orchestrator
+  serving:
+    framework: "fastapi"
+    port: 8001
+    workers: 4
+    
+    a_b_testing:
+      enabled: true
+      traffic_split: 0.5
+      evaluation_metric: "sharpe_ratio"
+      
+    model_versions:
+      keep_versions: 5
+      rollback_on_failure: true
+      canary_deployment: true
+  
+  # Real-time Feature Pipeline
+  realtime_features:
+    enabled: true
+    computation_engine: "flink"  # or "spark", "ray"
+    
+    streaming_window: "5m"
+    sliding_window: "1m"
+    
+    feature_store: "feast"  # or "hopsworks"
+    update_frequency: "1s"
+  
+  # Prediction Cache
+  caching:
+    enabled: true
+    cache_engine: "redis"
+    
+    redis:
+      host: "localhost"
+      port: 6379
+      db: 0
+    
+    ttl_policies:
+      immediate_predictions: 30  # seconds
+      short_term_predictions: 300  # seconds
+      medium_term_predictions: 3600  # seconds
+    
+    cache_invalidation:
+      on_market_event: true
+      on_volatility_spike: true
+  
+  # Health Monitoring
+  monitoring:
+    enabled: true
+    metrics_collection: "prometheus"
+    dashboard: "grafana"
+    
+    alerts:
+      latency_threshold_ms: 100
+      error_rate_threshold: 0.01
+      prediction_drift_threshold: 0.1
+      
+    auto_recovery:
+      enabled: true
+      restart_on_failure: true
+      fallback_to_stable_model: true
+
+# ============================================================================
+# DEPLOYMENT & SCALING
+# ============================================================================
+deployment:
+  environment: "production"
+  
+  scaling:
+    auto_scaling: true
+    min_instances: 2
+    max_instances: 10
+    cpu_threshold: 0.8
+    memory_threshold: 0.8
+  
+  resource_allocation:
+    cpu: "4"
+    memory: "16Gi"
+    gpu: "1"  # For deep learning models
+    
+  containerization:
+    docker: true
+    kubernetes: true
+    
+  ci_cd:
+    enabled: true
+    testing_stages:
+      - "unit_tests"
+      - "integration_tests"
+      - "backtest_validation"
+      - "stress_tests"
+    
+    deployment_strategy: "blue_green"
+
+# ============================================================================
+# LOGGING & TELEMETRY
+# ============================================================================
+telemetry:
+  logging:
+    level: "INFO"
+    format: "json"
+    
+    files:
+      system: "logs/system.log"
+      predictions: "logs/predictions.log"
+      trades: "logs/trades.log"
+      errors: "logs/errors.log"
+    
+    rotation:
+      max_size_mb: 100
+      backup_count: 10
+  
+  tracing:
+    enabled: true
+    system: "jaeger"  # or "zipkin"
+    sampling_rate: 0.1
+    
+  metrics:
+    prometheus_port: 9090
+    custom_metrics:
+      - "prediction_latency"
+      - "model_accuracy"
+      - "feature_importance"
+      - "data_quality_score"

@@ -1,0 +1,80 @@
+# ML-Pipeline/config/enterprise_config.yaml
+version: "4.0.0"
+
+# Backward compatibility settings
+backward_compatibility:
+  enabled: true
+  model_path: "models/"  # Original location
+  symlink_models: true   # Create symlinks for AI-Service
+  
+# Enterprise features
+enterprise:
+  model_registry:
+    enabled: true
+    registry_path: "registry/"
+    production_path: "registry/production/"
+    experiments_path: "registry/experiments/"
+    
+  online_learning:
+    enabled: true
+    update_frequency: "hourly"  # hourly, daily, weekly
+    learning_rate: 0.01
+    memory_size: 1000
+    
+  multi_symbol:
+    enabled: true
+    default_symbols:
+      - "SOL/USDT"
+      - "BTC/USDT" 
+      - "ETH/USDT"
+      - "BNB/USDT"
+      - "ADA/USDT"
+    max_parallel_training: 10
+    
+  monitoring:
+    enabled: true
+    track_predictions: true
+    drift_detection: true
+    alert_channels: ["email", "slack"]
+    
+  deployment:
+    auto_deploy: false
+    staging_period_hours: 24
+    rollback_on_failure: true
+
+# Data sources
+data_sources:
+  market_data:
+    - "binance"
+    - "bybit"
+    - "kraken"
+    
+  alternative_data:
+    sentiment:
+      enabled: true
+      sources: ["twitter", "reddit", "news"]
+    on_chain:
+      enabled: true
+      sources: ["solana", "ethereum"]
+    social_volume:
+      enabled: true
+      sources: ["coingecko", "coinmarketcap"]
+
+# Performance thresholds
+performance_thresholds:
+  min_accuracy: 0.55
+  min_sharpe_ratio: 1.0
+  max_drawdown: 0.15
+  min_win_rate: 0.45
+  
+# Notification settings
+notifications:
+  email:
+    enabled: true
+    recipients: []
+  slack:
+    enabled: true
+    webhook_url: ""
+  telegram:
+    enabled: false
+    bot_token: ""

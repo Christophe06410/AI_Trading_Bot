@@ -1,0 +1,112 @@
+﻿# ============================================================================
+# TRADING BOT CONFIGURATION - PRODUCTION READY
+# ============================================================================
+
+# Environment
+environment: "development"
+trading_mode: "testnet"
+
+# Trading Configuration
+trading:
+  # Trading pairs
+  pairs: ["SOL/USDC"]
+  
+  # Position limits
+  max_positions: 5
+  position_size_usd: 50.0
+  min_position_size_usd: 10.0
+  
+  # Trading intervals (seconds)
+  check_interval: 10
+  market_data_interval: 5
+  position_check_interval: 2
+  
+  # Order configuration
+  order_type: "market"
+  slippage_tolerance: 0.01  # 1%
+  time_in_force: "IOC"
+  
+  # Stop loss configuration
+  stop_loss:
+    type: "trailing"
+    initial_percent: 0.01    # 1%
+    activation_percent: 0.02  # Activate after 2% profit
+    
+  # Take profit
+  take_profit:
+    enabled: false
+    
+  # Market filters
+  pause_first_friday: true
+  max_volatility_percent: 5.0
+  
+  # Shutdown behavior
+  close_on_shutdown: false
+
+# AI Service Integration
+ai_service:
+  url: "http://localhost:8000"
+  endpoint: "/api/v1/recommendation"
+  timeout: 10
+  retries: 3
+  min_confidence: 0.70
+
+# Solana Network Configuration
+solana:
+  rpc_endpoint: "https://api.devnet.solana.com"
+  websocket_endpoint: "wss://api.devnet.solana.com"
+  commitment: "confirmed"
+  max_retries: 3
+  
+  # DEX Configuration
+  dex:
+    primary: "jupiter"
+    jupiter_api_url: "https://quote-api.jup.ag/v6"
+    slippage_bps: 100  # 1% in basis points
+    fee_bps: 10        # 0.1% fee
+
+# Wallet Configuration
+wallet:
+  address: ""  # Will be loaded from .env
+  private_key_storage: "env"
+  encrypted_file_path: "wallet/encrypted_key.bin"
+  max_hot_wallet_balance_sol: 10.0
+
+# Risk Management
+risk:
+  max_daily_loss_percent: 20.0
+  max_position_percent: 5.0
+  max_consecutive_losses: 3
+  cooldown_minutes: 30
+
+# Database
+database:
+  type: "sqlite"
+  connection_string: "sqlite:///data/trading_bot.db"
+  keep_trades_days: 90
+  keep_logs_days: 30
+
+# Logging
+logging:
+  level: "INFO"
+  format: "json"
+  file: "logs/trading_bot.log"
+  position_log_file: "logs/positions.log"
+  error_log_file: "logs/errors.log"
+  
+  console:
+    enabled: true
+    level: "INFO"
+    format: "colored"
+
+# Monitoring
+monitoring:
+  enabled: true
+  metrics_port: 9090
+  health_check_interval: 30
+
+# Performance
+performance:
+  max_concurrent_requests: 100
+  connection_timeout: 10
+  cache_ttl: 30
